@@ -17,5 +17,16 @@ namespace TempWatch2.Controllers
                 Humidity = 65
             };
         }
+        
+        [HttpGet("test2")]
+        public TemperatureTestResponse GetTest2()
+        {
+            // ค่าจำลองไว้เรียน request flow ยังไม่ได้อ่านจากเซ็นเซอร์หรือฐานข้อมูล
+            return new TemperatureTestResponse
+            {
+                Temperature = 222,
+                Humidity = 222
+            };
+        }
     }
 }
