@@ -8,6 +8,7 @@
 
 - .NET 10 SDK
 - SQL Server LocalDB (ค่าเริ่มต้นใน `appsettings.json`)
+- Flutter SDK (สำหรับแอปใน `tempwatch_app/`)
 
 ## รันโปรเจกต์
 
@@ -20,6 +21,8 @@ dotnet run
 ```
 
 เปิด Swagger ที่ [http://localhost:5078/swagger](http://localhost:5078/swagger)
+
+(API listen ที่ `0.0.0.0:5078` เพื่อให้เครื่องอื่นใน LAN เรียกได้ — เปิดในเบราว์เซอร์ยังใช้ `localhost` ได้เหมือนเดิม)
 
 หน้าแรก `/` จะ redirect ไป Swagger อัตโนมัติ
 
@@ -47,3 +50,27 @@ dotnet run
   "humidity": 65
 }
 ```
+
+## รันแอป Flutter
+
+ต้องมี [Flutter SDK](https://docs.flutter.dev/get-started/install) แล้วรัน API ก่อน (`dotnet run` ที่พอร์ต 5078)
+
+```powershell
+cd tempwatch_app
+flutter pub get
+flutter run -d windows
+```
+
+หรือเลือกอุปกรณ์ Android (`flutter devices` แล้ว `flutter run -d <id>`)
+
+Base URL อยู่ที่ `tempwatch_app/lib/api_config.dart` — เปลี่ยนบรรทัดเดียวตามเป้าทดสอบ:
+
+| เป้าทดสอบ | `ApiConfig.baseUrl` | หมายเหตุ |
+| --- | --- | --- |
+| Flutter Windows | `http://localhost:5078` | ค่าเริ่มต้น |
+| Android Emulator | `http://10.0.2.2:5078` | `10.0.2.2` คือ localhost ของเครื่อง host — emulator มอง `localhost` เป็นตัวเอง |
+| โทรศัพท์จริงใน LAN | `http://<LAN-IP-ของ-PC>:5078` | เช่น `http://192.168.1.10:5078` |
+
+ข้อมูลยังใส่ผ่าน Postman / Swagger (`POST /api/temperature`) แอป Flutter อ่านอย่างเดียว (GET)
+
+เมื่อใช้โทรศัพท์จริง: เปิด Windows Firewall ให้พอร์ต 5078 และให้ PC กับโทรศัพท์อยู่ Wi-Fi เดียวกัน

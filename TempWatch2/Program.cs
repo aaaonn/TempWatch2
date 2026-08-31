@@ -16,12 +16,27 @@ builder.Services.AddDbContext<TempWatchDbContext>(options =>
 // เทียบ Gin: ต่อ *gorm.DB ให้ handler ใช้ต่อ request ไม่แชร์ข้าม request
 builder.Services.AddScoped<TemperatureService>();
 
+if (builder.Environment.IsDevelopment())
+{
+    // CORS เปิดเฉพาะ Development แบบ AllowAny — Windows/Android ไม่ติด CORS
+    // แต่กันพลาดถ้ามี origin อื่นเรียก และตรงกับที่โปรเจกต์นี้คาดว่าจะมี
+    // อย่าใช้ AllowAnyOrigin ใน production
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(policy =>
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod());
+    });
+}
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors();
 }
 
 app.MapGet("/", () => Results.Redirect("/swagger"));
