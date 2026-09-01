@@ -84,7 +84,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (_reading == null) {
       return _message(
         icon: Icons.inbox_outlined,
-        text: 'ยังไม่มีข้อมูล\nลอง POST จาก Postman / Swagger แล้วกด Refresh',
+        text: 'ยังไม่มีข้อมูล\nลอง POST จาก Postman / Swagger หรือรอ ESP32 ส่งค่า แล้วกด Refresh',
       );
     }
 

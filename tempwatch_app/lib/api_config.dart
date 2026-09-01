@@ -8,6 +8,7 @@ class ApiConfig {
   //   (10.0.2.2 = localhost ของเครื่อง host — emulator มอง localhost เป็นตัวเอง)
   // - โทรศัพท์จริงใน LAN: 'http://<LAN-IP-ของ-PC>:5078'
   //   เช่น 'http://192.168.1.10:5078' แล้วเปิด Windows Firewall พอร์ต 5078
-  // static const String baseUrl = 'http://localhost:5078';
-  static const String baseUrl = 'http://10.0.2.2:5078'; // Android Emulator
+  //static const String baseUrl = 'http://localhost:5078'; // Flutter Windows
+  //static const String baseUrl = 'http://10.0.2.2:5078'; // Android Emulator
+  static const String baseUrl = 'http://10.210.145.90:5078'; // โทรศัพท์จริงใน LAN
 }
